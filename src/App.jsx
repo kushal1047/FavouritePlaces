@@ -76,46 +76,50 @@ function App() {
     setErrorUpdatingPlaces(null);
   }
 
-  <>
-    <Modal open={errorUpdatingPlaces} onClose={handleError}>
-      {errorUpdatingPlaces && (
-        <Error
-          title="An error occured"
-          message={errorUpdatingPlaces.message}
-          onConfirm={handleError}
+  return (
+    <>
+      <Modal open={errorUpdatingPlaces} onClose={handleError}>
+        {errorUpdatingPlaces && (
+          <Error
+            title="An error occured"
+            message={errorUpdatingPlaces.message}
+            onConfirm={handleError}
+          />
+        )}
+      </Modal>
+      <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
+        <DeleteConfirmation
+          onCancel={handleStopRemovePlace}
+          onConfirm={handleRemovePlace}
         />
-      )}
-    </Modal>
-    <Modal open={modalIsOpen} onClose={handleStopRemovePlace}>
-      <DeleteConfirmation
-        onCancel={handleStopRemovePlace}
-        onConfirm={handleRemovePlace}
-      />
-    </Modal>
+      </Modal>
 
-    <header>
-      <img src={logoImg} alt="Stylized globe" />
-      <h1>PlacePicker</h1>
-      <p>
-        Create your personal collection of places you would like to visit or you
-        have visited.
-      </p>
-    </header>
-    <main>
-      {error && <Error title="An error occurred..." message={error.message} />}
-      {!error && (
-        <Places
-          title="I'd like to visit ..."
-          fallbackText="Select the places you would like to visit below."
-          loadingText="Fetching user places..."
-          isLoading={isFetching}
-          places={userPlaces}
-          onSelectPlace={handleStartRemovePlace}
-        />
-      )}
-      <AvailablePlaces onSelectPlace={handleSelectPlace} />
-    </main>
-  </>;
+      <header>
+        <img src={logoImg} alt="Stylized globe" />
+        <h1>PlacePicker</h1>
+        <p>
+          Create your personal collection of places you would like to visit or
+          you have visited.
+        </p>
+      </header>
+      <main>
+        {error && (
+          <Error title="An error occurred..." message={error.message} />
+        )}
+        {!error && (
+          <Places
+            title="I'd like to visit ..."
+            fallbackText="Select the places you would like to visit below."
+            loadingText="Fetching user places..."
+            isLoading={isFetching}
+            places={userPlaces}
+            onSelectPlace={handleStartRemovePlace}
+          />
+        )}
+        <AvailablePlaces onSelectPlace={handleSelectPlace} />
+      </main>
+    </>
+  );
 }
 
 export default App;
